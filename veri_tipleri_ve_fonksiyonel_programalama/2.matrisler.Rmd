@@ -1,0 +1,338 @@
+---
+title: "Matrisler"
+output:
+  html_document: default
+  word_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+# 1.Matris Nedir?
+
+Matrisler, iki boyutta düzenlenmis verilerdir, yanyana ya da alt alta dizilenmis vektor gibi düsünülebilirler.
+
+# 2.Matris Bicimlendirme
+
+```{r}
+# vektorlerden matris olusturma
+
+v1 <- c(3,4,6,8,5)
+v2 <- c(4,8,4,7,1)
+v3 <- c(2,2,5,4,6)
+v4 <- c(4,7,5,2,5)
+
+# sutunlar bazinda toplama islemi
+v <- cbind(v1,v2,v3,v4)
+v
+
+# matrix fonksiyonu ile olusturma (ilk argumana veri setini, ikinci argumana satır sayısı ve ucuncu arguman sutun sayisi)
+
+matrix(1:9, nrow = 3, ncol = 3)
+
+# yukaridaki birlestirme isleminde sutunlara gore yapmistir.Fonksiyonun on tanimli degerinde satirlara gore birlestirme FALSE olarak belirtilmistir.Bunu degistirebiliriz.
+
+matrix(1:9, nrow = 3, ncol = 3, byrow = TRUE)
+
+
+# kendi girdigimiz degerler ile matris olusturma
+
+matrix(c(32,16,34,28,66,17), nrow = 2, ncol = 3)
+
+
+# fonsiyon icerisindeki arguman sirasini biliyorsak rakamsal olarak da ifade edebiliriz.
+
+matrix(c(1,2,3,11,22,33,111,222,333), 3, 3)
+
+```
+
+## Matris Boyutlari ve Frekans Tablosu
+
+```{r}
+
+# matrisin boyutlarini ogrenme
+
+m <- matrix(c(1,2,3,11,22,33,111,222,333), 3, 3)
+dim(m)  # dimension fonskiyonu
+
+# rep() fonksiyonu belirtilen deger aralıgında ayni degerleden verı uretmek icin kullanilir.
+
+m <- matrix(rep(1:3, 3), nrow = 3, ncol=3)
+
+# frekans tablosu (hangi degerlerden kacar tane oldugu bilgisi)
+
+table(m)
+
+```
+
+## Matris Birlestirme
+
+```{r}
+
+m1 <- rnorm(16)  # normal dagilimli kitle
+
+# olusturulan vektoru matrise cevirme
+
+m1 <- matrix(m1, nrow = 4, ncol = 4)
+
+m2 <- rnorm(16, 90, 10) # normal dagilimli kitle ,ortalama 90, standart sapma 10
+
+m2 <- matrix(m2, nrow = 4, ncol = 4)
+
+
+# Matrisleri Birlestirme
+
+# satir
+rbind(m1,m2)
+
+# sutun
+cbind(m1,m2)
+
+# Matrisler icinden istenilen kisimlarin alinmasi
+
+m1[1:2, 1:2]   # 1.ve 2.satir ile 1.ve 2.sutun
+m2[3:4, 3:4]   # 3.ve 4.satir ile 3.ve 4.sutun
+
+# matrisleri yan yana birlestirme
+cbind(m1[1:2, 1:2], m2[3:4, 3:4] )
+
+```
+
+## Matris İsimlendirme
+
+```{r}
+
+v1 <- c(3,4,6,8,5)
+v2 <- c(4,8,4,7,1)
+v3 <- c(2,2,5,4,6)
+v4 <- c(4,7,5,2,5)
+
+v <- cbind(v1,v2,v3,v4)
+
+# İcerisinde olan veri tiplerinin isimlerini gosterir.
+colnames(v)
+
+# Kolon isimleri degistirme
+colnames(v) <- c("bir","iki","uc","dort")
+
+# Satir isimlerini degistirme
+rownames(v) <- c("g1","g2","g3","g4","g5")
+
+
+# Amacimiz daha buyuk boyutlu matrislerde her bir satirin isim degisikligi yapmak olsun.
+
+dev_matris <- matrix(1:10000, ncol = 5, nrow = 500)
+
+rownames(dev_matris) <- c(paste("musteri_id", 1:500, sep = "_"))
+
+```
+
+## 3.Matris Eleman Islemleri
+
+## Matris Indeksi ve Eleman Secimi
+
+```{r}
+
+M <- matrix(c(1,2,11,22,111,222,1111,2222), nrow = 4, ncol = 2, byrow = TRUE)
+
+colnames(M) <- c("bir","iki")  # sutunlarina isim verme
+rownames(M) <- c("rakam","onlar","yuzler","binler")  # satirlarina isim verme
+M        
+
+# eleman secme (satir ve sutun kesisiminde ki deger)
+
+M[1,1]
+
+M[3,1]
+
+# satir secme
+
+M[1, ]  # 1.satirdaki tum degerleri secmek icin satır numarası ve sonra bosluk bırakarak yazarız.
+
+M[1:2, ]  # 1.ve 2.satirdaki tum degerler
+
+M[c(1,4), ]  # 1.ve 4.satirdaki tum degerler
+
+
+# sutun secme
+
+M[ ,1]  # 1.sutundaki degerler satir bazinda
+
+M[ ,1:2]  # 1'den 2'ye kadar olan sutunlar
+
+
+m <- matrix(rnorm(25), nrow = 10, ncol = 10)
+
+m[1:2, 9:10]  # 1.satirdan 2'ye kadar, 9.sutundan 10'a kadar
+
+colnames(m) <- c(paste("sutun", 1:10, sep = "_"))
+rownames(m) <- c(paste("satir", 1:10, sep = "_"))
+
+# satir ve sutunlari isimlendirilmis matrisin icinden secim 
+
+m[ , "sutun_7"]  # 7.sutuna denk gelen tum satir degerleri
+m["satir_7", ]   # 7.satira karsilik gelen tum sutun degerleri
+
+
+```
+
+```{r}
+# Problem : Bir veritabanindan yuzlerce satir ve sutun degerlerine sahip cekilen verimiz var.Fakar bu degiskenlerin isimleri anlamsiz ve bozuk karakter icermektedir.Bunlari belirli bir standart icersinde yeniden olusturmak istiyoruz.
+
+# buyuk ölcekli bir matris olusturuyoruz.
+m <- matrix(1:1000, 50, 10)
+
+# kolon isimlerini degisken olarak degistiyoruz.
+colnames(m) <- c(paste("degisken", 1:10, sep = "_"))
+
+# Amacimiz;her sutunun(degiskenin) kendi ortalamasinin karekokunu bu degiskenin ismi olarak atamak
+
+m[, "degisken_1"]  # degiskeni secme
+mean(m[, "degisken_1"])  # degiskenin ortalamasi
+sqrt(mean(m[, "degisken_1"]))  # ortalamasinin karekoku
+round(sqrt(mean(m[, "degisken_1"])))  # round fonksiyonu yuvarlama yapar.
+as.character(round(sqrt(mean(m[, "degisken_1"]))))  # degeri karaktere cevirme
+
+# tum islemleri bir araya getirerek kolon 1 degiskenin ismini amacimiza uygun olarak degistirdik.
+colnames(m)[1] <- as.character(round(sqrt(mean(m[, "degisken_1"]))))
+
+# Fakat her bir degisken icin bu islemi yapmak zor olacagindan dolayi bu islemi apply() fonksiyonu kullanarak gerceklestirecegiz. apply() fonksiyonu icerisine veriyi girdikten sonra satir veya sutuna gore hangi islemin yapilacagini belirtiriz.
+
+colnames(m) <- as.character(round(sqrt(apply(m,2,mean))))
+
+```
+
+## Kosullu Eleman Secimi
+
+```{r}
+
+# Matrisler icinden belirli kosulu saglayanlari almak istedigimiz zaman kullanilir.Bu ihtiyac matrislerin boyutu buyudugunde bunları goz yordamı ile yapamayacagimizdan dolayi bunlari bazı kosulları ifade etmemiz gerekmektedir.
+
+m <- matrix(1:25, nrow = 5, ncol = 5)
+
+m[, 1] > 2  # 1.sutundaki degerlerden 2'den buyuk olanları TRUE-FALSE olarak gosterir.
+
+m[m[, 1] > 2, ]  # 1.sutundaki 2'den buyuk degerleri tum kolonlara gore indirgedi.
+
+ # 1.sutunda sutunun ortalamasindan buyuk olan degerler
+m[ m[, 1] > mean(m[, 1]), 1] 
+
+# degerleri 4.sutun ortalamasindan kucuk olan 2.sutunun degerleri 
+m[ m[, 2] <  mean(m[, 4]), 2]
+
+```
+
+# 4.Matris Hesaplamalar
+
+## Matematiksel Islemler
+
+```{r}
+
+A <- matrix(1:9, 3, 3)
+B <- matrix(1:9, 3, 3)
+
+A + B
+A - B
+A * B
+A / B
+
+A[1,2] + B[3,3]
+
+sum(A)
+mean(A)
+rowSums(A)  # satir degerleri toplami
+colSums(A)  # sutun degerleri toplami
+
+rowMeans(B)  # satir degerleri ortalamasi
+colMeans(B)  # sutun degerleri ortalamasi
+```
+
+## Lineer Cebir Islemleri
+
+```{r}
+
+A <- matrix(1:9 , 3, 3)
+
+diag(A)  # matrisin kosegen elemanlari (caprazlamasina)
+
+sum(diag(A))  # matrisin kosegen eleman toplami alindiginda matrisin izi elde edilir.
+
+I <- diag(c(1,1,1))  # kosegen elemanlari 1 olan birim matris
+
+# Kosegen elemanlari disinda kalan diger elemanların birbirine esit olan matrise simetrik matris adı verilmektedir.
+
+matrix(c(2,1,3,1,2,1,3,1,0), 3, 3)  # simetrik matris
+
+# Tranpose alma - Sutun degerleri satirlar olarak gelir.
+t(A)
+
+# Kosegen elemanlarinin carpilip birbirlerinden cikarilmasi islemine determinant denir.
+
+det(matrix(c(0,1,1,1), nrow = 2))
+
+
+# MATRIS CARPIMI
+
+A <- matrix(1:9 , 3, 3)
+B <- matrix(1:9 , 3, 3)
+
+# R'da iki tane matrisi birbiri ile carpmak icin % * % ifadelesi kullanilir.
+
+A %*% A
+
+# Bir matrisin tersini alma
+
+solve(matrix(c(3,4,5,8), 2, 2))
+
+```
+
+# 5.Matris Formunda Regresyon Uygulamasi
+
+Regresyon Analizi, bagimsiz degiskenler ile bagimli degiskenler arasindaki iliskiyi modelleyen bir tekniktir.(Makine Ogrenmesi algoritmalarindan birisidir.)
+
+Ornegin; bir araba fiyatini dusunelim.Araba fiyatini etkileyen faktorleri dusundugumuzde kaza durumu, degisen parcası, kilometresi ve vites durumunu sayabiliriz.Bunlar bagimsiz degisken ve arabanin fiyati ise bagımli degisken olacaktir.
+
+Elimizdeki aracin bu ozelliklerine karsilik gelen bagimli degisken degerleri oldugu durumda bu yapiyi ifade eden bir model yapisi kurabilirsek daha sonra elimize bu ozellikler geldiginde arabanin fiyatini bilebiliriz.
+
+Formül --> ß = [X'X]^-1 X'y
+
+```{r}
+
+# Amacimiz regresyon modellemesi yaparak katsayi degerlerini bulmak
+
+# veri setini okuma
+
+library(readr)
+hsb <- read_table2("hsb.txt")
+
+hsb <- na.omit(hsb)  # veriseti içindeki eksik gözlemleri silme
+
+# bagimli degisken olusturma
+y <- matrix(hsb$write, ncol = 1)
+y
+
+# bagimsiz degisken alma
+x <- as.matrix(cbind(1, hsb$math, hsb$science, hsb$socst, hsb$female))
+
+# serbestlik derecesi hesaplamasi icin gerekli
+
+n <- nrow(x)
+p <- ncol(x)
+
+
+# Formulden yola cikarak elimizdeki x degerinin tranpose ve tersi alma islemini gerceklestirerek regresyon katsayilarini bulalim.
+
+solve(t(x) %*% x) %*% t(x) %*% y # [X'X]^-1 -- solve fonksiyonu ile tersini alma icerisine ise x'in tranpose ile kendisinin matirs olarak carpimi daha sonra disarisinda yine x degerinin tranpose ile y carpimi
+
+# Bulunan degerlerden 1.olan sabit deger, digerleri ise secmis oldugumuz bagimsiz degiskenlerin katsayilaridir.
+
+# Denklemsel gösterim --> 4.3 + 0.23x1 + 0.38x2 + 0.31x3 - 0.01x4 ...
+
+#########################################################################
+
+# R icersindeki lineer model - lm() fonksiyonu ile olusturulan dogrusal model ciktisi
+
+summary(lm(write ~ math + science + socst + female, hsb))
+
+```
+
+

@@ -1,0 +1,310 @@
+---
+title: "Veri Tipleri"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+# 1.Vektor Nedir?
+
+Vektorler iki tiptir. Atomic ve List
+
+Her vektorun iki temek ozelligi vardir. typeof ve length
+
+4 tane arttirilmis vektor vardir.Bunlar;
+Faktorler, tarih-zaman, data frame ve tibbles
+
+## Onemli Atomic Vektorler
+
+```{r}
+
+c(TRUE, FALSE, NA)
+
+# integer & numeric
+
+a <- 1
+
+b <- 1L
+
+# character
+
+c <- "ibrahim"
+```
+
+# 2.Vektor Bicimlendirme
+
+## Vektor Olusturma
+
+```{r}
+
+a <- c(1,2,3,4)
+
+b <- c("a","a","a")
+
+c <- 1:10
+
+```
+
+
+## Vektor Birlestirme
+
+```{r}
+
+v <- 1:10
+
+y <- 2:11
+
+v + y  # scaler olarark iki vektorun degerlerini ust uste topladi.
+
+# Eger iki vektorun uzunlukları esit degilse; uzunluk seviyelerine kadar toplar daha sonra eksik olan vektoru tekrar bastan dolduracak sekilde doldurmaya calisir.
+
+z <- 1:5
+
+v + z
+
+# Peki vektorun eleman sayisi digerinin yarisi kadar olmazsa; bu kısa olan vektorun uzunlugu kadar parca parca olarak doldurmaya devam eder.
+
+# Vektor anlaminda birlestirme yapmak icinde yani yan yana toplamak için;
+
+c(v,y)
+c(v,z)
+c(v,z,y)
+
+# Birlestirme islem icin ifade edilmesi gereken iki onemli fonksiyon vardır;
+
+# rbind: satır bazinda birlestirme
+rbind(v,y)
+
+# cbind: sutun bazinda birlestirme 
+cbind(v,y)
+
+```
+
+
+## Vektor Isimlendirme
+
+```{r}
+a <- c(x=1, y=2, z=3)
+
+```
+
+
+## Vektor Tipleri ve Arasinda Donusum
+
+### Vektor Tipleri
+
+```{r}
+
+# Vektorun tiplerini sorgulayan fonksiyonlar;
+
+is.logical(a)
+is.integer(a)
+is.double(a)
+is.numeric(a)
+is.character(a)
+is.atomic(a)
+is.list(a)
+is.vector(a)
+
+# Bu vektor tipleri şu noktada ise yaramaktadır.Bir kod blogu yazildigi zaman bu kod blogu icerisinde olusan bir veri tipinin sadece belirli bir veri tipi olup olmadigini sorgulayip bu sorgu üzerinde yeni bir kod blogu insaa etmek istedigimizde cok islevsel olmaktadir.
+
+```
+
+### Vektorler Arasi Donusum
+
+```{r}
+
+tf <- c("I","K")  # karakter degiskeni
+
+tf <- as.logical(tf)  # character'den logical'e cevirme
+
+#######################################################################
+
+a <- 99  # numerik degiskeni
+
+a <- as.character(a)  # numeric'den character'e cevirme
+
+#######################################################################
+
+a <- 32  # numeri degiskeni
+
+a <- as.integer(a)  # numeric'den integer'a cevirme
+
+#######################################################################
+
+a <- c(1,2,"a")
+
+# Eger vektorun icerisinde sadece bir tane dahi bir karakter tipinde birim var ise butun vektorun tipi o karaktere göre sekillenip butun vektor karakter tipini almis olur.
+
+####################################################################### 
+a <- c(10,10,10,20,20,30,40,50,50)  # numerik vektor
+
+# Bu vektoru factor' cevirmek istedigimizde;
+
+a <- factor(a)
+
+# Burada yapilan islem vektor icindeki sayıların birimlerinden bagimsiz olacak sekilde elemanlari faktorlestiriyor.Yani şu anlama gelmektedir.Burada 5 tane farkli deger var, toplamda 5'ten fazla deger oldugu halde birbirinden farkli degerler oldugundan dolayi bu faktorlestirme islemi aslinda kategoriklestirme olmaktadir.Ve 5 seviyeli bir kategorik degisken olarak bu degiskeni olusturmustur.
+
+
+```
+
+# 3.Vektor Eleman İslemleri
+
+## Vektor Indeksi ve Eleman Secimi
+
+```{r}
+
+vektor <- rnorm(30)  # normal dagılimli kitle [-3, +3]
+
+# bir vektorun icerisindeki elemanlara indeks kullanarak erismek mumkundur.
+
+vektor[1]
+
+```
+
+## Birden Fazla Eleman Secmek
+
+```{r}
+
+# Birden fazla secim islemi yapılmak istenildiginde c fonksiyonu icerisine erisilmek istenilen degerler girilir.
+
+vektor[c(2,3,4)]
+
+```
+
+## Seri Olarak Eleman Secmek
+
+```{r}
+
+# Vektor icerisinden seri sekilde aralık belirterek secme islemi yapilmak istenildiginde;
+
+vektor[1:10]
+vektor[20:30]
+
+```
+
+## Indeks ile Deger Atamak
+
+```{r}
+
+# Index'i daha önce bir elemana erismek icin kullandik.Bu indexi vektor icerisindeki elemana yeni bir deger atamak icinde kullaniriz.
+
+vektor[1] <- 1  # 1.sıradaki elemana 1 degerini atamak
+vektor
+
+```
+
+## Toplu Deger Atamak
+
+```{r}
+
+vektor[c(2,3,4)] <- c(2,3,4)
+vektor
+
+# Belirli bir deger araligindaki elemanlara da toplu olarak deger atamasi yapabiliriz.
+
+vektor[c(1:10)] <- 0  # 1'den 10'a kadar tum degerler 0
+vektor
+```
+
+## Isimlendirilmis Vektorlerden Eleman Secmek
+
+
+```{r}
+
+# Vektorun elemanlarini isimlendirme
+v <- c(x=1, y=2, z=3)
+
+# Isimlendirilmis vektor elemanlarına erisme
+
+v["x"]
+v["y"]
+v["z"]
+
+# Birden fazla eleman secme
+v[c("x","y")]
+
+```
+
+
+## Kosullu Eleman Secimi
+
+```{r}
+
+vektor
+
+# Vektor icerisinde degeri 0'dan buyuk olanlara erismek istedigimiz varsayalım.
+
+vektor[vektor > 0]
+
+vektor[vektor >= 0]
+
+# Birden fazla kosul/mantıksal operator kullanarak secim yapma
+
+vektor[vektor > 0 & vektor < 1 ]
+
+
+```
+
+
+## Vektor Elemanlarinin Silinmesi
+
+```{r}
+
+v <- 1:10
+
+# Vektor icerisindeki tum elemanları silme/bosaltma
+v <- NULL
+
+# Bir vektorun istemedigimiz elemanından kurtulmak istedigimizde onu dısarida bırakip yeni bir atama yapabiliriz.
+
+v <- v[2:10]
+v
+
+```
+
+# 4. Vektorel Hesaplamalar
+
+## Matematiksel Islemler
+
+```{r}
+
+v <- 1:10
+
+y <- 2:11
+
+v + y
+
+v / y
+
+sqrt(v)  # karekok alma
+
+sum(v)   # vektor icerisindeki elemanları toplama
+
+mean(v)   # ortalama alma
+
+median(v)  # ortanca deger
+
+v^2   # vektor icindeki her elemanin karesini alma
+
+v^3   # kupunu alma
+
+```
+
+
+## Istatistiksel Islemler
+
+```{r}
+
+min(v)  # minumum deger
+
+max(v)  # maksimum deger
+
+cumsum(v)  # kumulatif toplamlar(kendisinden bir önceki degerle toplayarak devam etme)
+
+```
+

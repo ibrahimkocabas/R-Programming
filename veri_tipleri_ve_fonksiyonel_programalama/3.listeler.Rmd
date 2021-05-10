@@ -1,0 +1,138 @@
+---
+title: "Listeler"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: console
+---
+
+# 1.Liste Nedir?
+
+Listeler, birden farkli veri formatini bir arada tutmaya calisan bir veri tipidir.Bu birden fazla veri formati bir plot cıktisi olacagi gibi bir excel ya da word dosyasida olabilir.Bununla beraber bir matris, vektor ve data frame'in birlesiminden olusan bir degerde olabilir.
+
+# 2.Liste Bicimlendirme
+
+## Liste Olusturma
+
+```{r}
+
+list("Ibrahim","Mesele veriden faydali bilgi cikarmak",1:10, 32, 1025.99, FALSE)
+
+```
+
+## Liste Birlestirme
+
+```{r}
+
+liste_bir <- list("Besiktas","Veri Bilimi", 1:10, 32, 4032,77, FALSE)
+
+liste_iki <- list("R Studio","Python")
+
+# Birlestirme
+c(liste_bir,liste_iki)
+
+```
+
+## Liste Isimlendirme
+
+```{r}
+
+liste <- list(c("siyah","beyaz","sampiyon","besiktas"),
+              matrix(1:9, 3, 3),
+              list("baska bir liste", 1:10)
+              )
+# Listelerin icinde bulunan veri tiplerini isimlendirirken digerlerinden farkli olarak names() kullaniyoruz.
+
+names(liste) <- c("Super Lig","matris","karisik")
+```
+
+# 3.Liste Eleman Islemleri
+
+## Liste Indeksi ve Eleman Secimi
+
+```{r}
+
+liste <- list(c("siyah","beyaz","sampiyon","besiktas"),
+              matrix(1:9, 3, 3),
+              list("baska bir liste", 1:10)
+              )
+names(liste) <- c("Super Lig","matris","karisik")
+
+# Listelerin icerisindeki elemanlara erismek icin [] kullaniyoruz.
+
+liste[1]
+
+# Liste icerisinden isimlendirme ile de bilesen cekilebilir. Bunu yapmak icinde $ ifadesini kullaniyoruz.
+
+liste$matris
+
+```
+
+## Liste Eleman Degistirme
+
+```{r}
+
+liste <- list(c("siyah","beyaz","sampiyon","besiktas"),
+              matrix(1:9, 3, 3),
+              list("baska bir liste", 1:10)
+              )
+names(liste) <- c("Super Lig","matris","karisik")
+
+# Listeye eleman ekleme
+liste[4] <- "Ibrahim Kocabas"
+liste[4]
+
+# Eleman Silme
+liste[4] <- NULL
+
+# Eleman Degistirme / Guncelleme
+liste[3] <- " bu artık listenin 3.elemanidir." 
+
+```
+
+## Listeyi Vektore Donustrme
+
+```{r}
+
+# Elimizdeki listeyi vektore donusturmek istiyoruz.Cunku liste formatindaki bir veri R icerisindeki muhtemelen bir cok fonksiyon icerisinde calisabilir degildir.
+
+la <- list(1:15)
+
+# Listelerir vektore donusturmek icin unlist() fonksiyonu kullanilmaktadir.
+
+a <- unlist(la)
+typeof(a)
+is.vector(a)
+```
+
+# 4. Liste Hesaplamalar
+
+```{r}
+
+unlist(la) * 2  # Listeler direk olarak scaler carpim islemi yapilamadiginden dolayı unlist ile vektore cevirdik ve islemi gerceklestirdik.
+
+liste$matris * 2  # Liste icindeki matris elemanina carpma islemi
+
+toupper(liste$`Super Lig`)  # Liste icindeki bir elemanin tum harflerini buyuk yapma
+
+```
+
+# 5.Liste Uzerinde Apply Uygulamalari
+
+```{r}
+
+l <- list(bir = 1:10, kare = (1:10)^2, kup = (1:10)^3)
+
+# Listeler icinde apply fonksiyonu lapply() formundadir.
+
+lapply(l, mean)  # her bir liste elemanin ortalamasi
+
+lapply(l, sum)   # her bir lsite elemanin toplami
+
+lapply(l, function(x) x / 2)  # kendimizde ic kismina fonksiyon yazabiliriz.
+
+lapply(c(1,2,3), function(x) matrix(rnorm(9), 3,3))
+
+```
+
