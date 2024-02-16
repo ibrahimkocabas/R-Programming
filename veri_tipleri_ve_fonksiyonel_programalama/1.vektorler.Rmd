@@ -13,7 +13,7 @@ editor_options:
 
 Vektorler iki tiptir. Atomic ve List
 
-Her vektorun iki temek ozelligi vardir. typeof ve length
+Her vektorun iki temel ozelligi vardir. typeof ve length
 
 4 tane arttirilmis vektor vardir.Bunlar;
 Faktorler, tarih-zaman, data frame ve tibbles
